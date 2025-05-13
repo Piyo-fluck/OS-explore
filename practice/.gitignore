@@ -1,0 +1,15 @@
+# 実行ファイル（拡張子なしのファイル）
+a.out
+main
+hello
+test
+run*
+
+# 中間ファイル
+*.o
+*.out
+
+# ビルド用ディレクトリ（ある場合）
+build/
+bin/
+obj/
