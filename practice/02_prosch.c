@@ -26,8 +26,8 @@ typedef struct {
 
 // Function to simulate state transition
 void transition_state(PCB *process, ProcessState new_state) {
-    printf("Transitioning Process %d: %d -> %d\n", 
-           process->pid, process->state, new_state);
+    //printf("Transitioning Process %d: %d -> %d\n", process->pid, process->state, new_state);
+
     process->state = new_state;
 }
 
@@ -74,7 +74,7 @@ void srtf(PCB *processes, int num_processes) {
 }
 
 void round_robin(PCB *processes, int num_processes, int time_quantum) {
-    int time = 0;
+    int time = 2;
     int done = 0;
     int sum_burst_time = 0;
     
@@ -133,7 +133,7 @@ void round_robin(PCB *processes, int num_processes, int time_quantum) {
 
 // Shortest Job First (SJF)
 void sjf(PCB *processes, int num_processes) {
-    int time = 0;
+    int time = 2;
     int done = 0;
     int sum_burst_time = 0;
 
@@ -167,14 +167,15 @@ void sjf(PCB *processes, int num_processes) {
     }
     printf("Average Turnaround Time = %.2f\n", (float)sum_burst_time / (float)num_processes);
     printf("Total Time: %d\n",time);
+    printf("\n");
 }
 
 int main() {
     PCB processes[] = {
-        {1, NEW, 4, 4, 4, 0, 0},  // pid=1, 到着時刻=0
-        {2, NEW, 8, 8, 8, 2, 0},    // pid=2, 到着時刻=2
-        {3, NEW, 2, 2, 2, 4, 0},     // pid=3, 到着時刻=4
-        {4, NEW, 2, 2, 2, 10, 0},     // pid=4, 到着時刻=10
+        {1, NEW, 1, 4, 4, 2, 0},  // pid=1, 到着時刻=0
+        {2, NEW, 1, 8, 8, 4, 0},    // pid=2, 到着時刻=2
+        {3, NEW, 1, 4, 4, 5, 0},     // pid=3, 到着時刻=4
+        {4, NEW, 1, 3, 3, 8, 0},     // pid=4, 到着時刻=10
     };
     int n = sizeof(processes) / sizeof(processes[0]);
 
@@ -187,7 +188,7 @@ int main() {
     srtf(processes, n);
 
     // Round Robin Scheduling
-    printf("Round Robin Scheduling\n");
+    printf("\nRound Robin Scheduling\n");
     for (int i = 0; i < n; i++) {
         processes[i].remaining_time = processes[i].burst_time; // Reset remaining time
         transition_state(&processes[i], READY);
