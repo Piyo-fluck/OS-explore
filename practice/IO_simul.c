@@ -3,9 +3,9 @@
 
 // シミュレーションパラメータ
 double delta = 1e-6; // 各命令の実行時間 [s]
-int N = 100;         // 割り込み処理の命令数
-double T = 1e-3;     // クォンタムの大きさ [s]
-int num_processes = 3; // プロセスの数
+int N = 2560;         // 割り込み処理の命令数
+double T = 1e-2;     // クォンタムの大きさ [s]
+int num_processes = 10; // プロセスの数
 double simulation_time = 1.0; // シミュレーション時間 [s]
 
 typedef struct {
@@ -58,11 +58,17 @@ int main() {
 
     // 結果の出力
     printf("シミュレーション結果:\n");
+    printf("1回の割り込みに要する時間: %.6f [s]\n", N*delta);
+    printf("1秒間最大の呼び出し回数: %.6f [s]\n", 1/(N*delta));
     printf("総シミュレーション時間: %.6f [s]\n", simulation_time);
     printf("プロセス実行時間: %.6f [s]\n", process_execution_time);
     printf("実効利用率: %.6f\n", effective_utilization);
     printf("理論値 (T / (T + N*delta)): %.6f\n", T / (T + N * delta));
     printf("サイクル数: %d\n", cycle_count);
+    printf("総割り込み実行時間: %.6f\n", cycle_count*N*delta);
+    for (int q = 0; q< num_processes; q++) {
+        printf("プロセス %d 実行時間: %.6f\n",q, simulation_time-processes[q].remaining_time);
+    }
 
     // メモリ解放
     free(processes);
